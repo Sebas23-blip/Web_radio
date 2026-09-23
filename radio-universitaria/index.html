@@ -1,0 +1,207 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Radio Universitaria · 101.5 En Vivo</title>
+    <meta
+      name="description"
+      content="La radio de la universidad, transmitiendo en vivo las 24 horas. Escucha en vivo desde tu navegador."
+    />
+    <meta name="theme-color" content="#12101B" />
+
+    <!-- Tipografías: Space Grotesk para displays/números, Inter para texto -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <link rel="stylesheet" href="../css/styles.css" />
+
+    <!-- Favicon simple (reemplaza por tu logo real en /assets) -->
+    <link
+      rel="icon"
+      href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📻</text></svg>"
+    />
+  </head>
+  <body>
+    <!-- ============ HEADER ============ -->
+    <header class="site-header">
+      <div class="brand">
+        <span class="brand__mark" aria-hidden="true">📻</span>
+        <span class="brand__name">Radio&nbsp;U</span>
+      </div>
+
+      <div class="live-badge" id="liveBadge" data-state="checking">
+        <span class="live-badge__dot"></span>
+        <span class="live-badge__text" id="liveBadgeText">Conectando…</span>
+      </div>
+    </header>
+
+    <main>
+      <!-- ============ HERO / REPRODUCTOR ============ -->
+      <section class="tuner" aria-label="Reproductor en vivo">
+        <p class="tuner__eyebrow">Estás sintonizando</p>
+        <h1 class="tuner__freq">
+          101.5<span class="tuner__freq-unit">FM</span>
+        </h1>
+
+        <!-- Botón de sintonización / Play-Pause. Es un <button>, NO un <audio controls>. -->
+        <button
+          class="dial"
+          id="playButton"
+          type="button"
+          aria-pressed="false"
+          aria-label="Reproducir transmisión en vivo"
+        >
+          <span class="dial__ring" aria-hidden="true"></span>
+          <span class="dial__ring dial__ring--pulse" aria-hidden="true"></span>
+
+          <!-- Icono Play -->
+          <svg
+            class="dial__icon dial__icon--play"
+            viewBox="0 0 24 24"
+            aria-hidden="true"
+          >
+            <path d="M8 5v14l11-7z" />
+          </svg>
+          <!-- Icono Pause -->
+          <svg
+            class="dial__icon dial__icon--pause"
+            viewBox="0 0 24 24"
+            aria-hidden="true"
+          >
+            <path d="M6 5h4v14H6zM14 5h4v14h-4z" />
+          </svg>
+          <!-- Icono de carga -->
+          <svg
+            class="dial__icon dial__icon--loading"
+            viewBox="0 0 24 24"
+            aria-hidden="true"
+          >
+            <circle cx="12" cy="12" r="9" />
+          </svg>
+        </button>
+
+        <p class="tuner__hint" id="playHint">Toca para escuchar en vivo</p>
+
+        <!-- ============ NOW PLAYING ============ -->
+        <div class="now-playing" id="nowPlaying" aria-live="polite">
+          <span class="now-playing__eq" aria-hidden="true">
+            <span></span><span></span><span></span><span></span>
+          </span>
+          <div class="now-playing__text">
+            <p class="now-playing__label">Sonando ahora</p>
+            <p class="now-playing__title" id="nowPlayingTitle">
+              Cargando información…
+            </p>
+          </div>
+        </div>
+
+        <!-- Elemento de audio real, oculto. Todo el control pasa por JS. -->
+        <audio id="audioPlayer" preload="none" playsinline></audio>
+      </section>
+
+      <!-- ============ COMUNIDAD EN DISCORD ============ -->
+      <section class="community" aria-label="Comunidad de Discord">
+        <div class="community__icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" role="img">
+            <path d="M19.5 5.1A16.5 16.5 0 0 0 15.4 4l-.5 1a15 15 0 0 0-5.8 0l-.5-1a16.5 16.5 0 0 0-4.1 1.1C1.9 8.5 1.2 12 1.5 15.5a16.6 16.6 0 0 0 5 2.5l1.2-1.6c-.7-.3-1.3-.6-1.9-1a10 10 0 0 0 .5-.4c3.7 1.7 7.7 1.7 11.4 0l.5.4c-.6.4-1.2.7-1.9 1l1.2 1.6a16.6 16.6 0 0 0 5-2.5c.4-4.1-.7-7.6-3-10.4ZM8.3 14.4c-1.1 0-2-1-2-2.2s.9-2.2 2-2.2 2 1 2 2.2-.9 2.2-2 2.2Zm7.4 0c-1.1 0-2-1-2-2.2s.9-2.2 2-2.2 2 1 2 2.2-.9 2.2-2 2.2Z" />
+          </svg>
+        </div>
+        <div class="community__copy">
+          <h2>Habla con la comunidad</h2>
+          <p id="discordDescription">Únete a la sala de Discord y conversa con quienes están haciendo la radio.</p>
+        </div>
+        <a
+          class="community__link"
+          id="discordLink"
+          href="#"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-describedby="discordDescription"
+        >
+          Entrar a Discord
+          <span aria-hidden="true">↗</span>
+        </a>
+      </section>
+
+      <!-- ============ PROGRAMACIÓN ============ -->
+      <section class="schedule" aria-label="Programación">
+        <div class="section-head">
+          <h2>Programación de hoy</h2>
+          <p class="section-head__sub">Horario local · lunes a viernes</p>
+        </div>
+
+        <ol class="schedule__list">
+          <li class="schedule__item">
+            <span class="schedule__time">06:00</span>
+            <div class="schedule__info">
+              <p class="schedule__show">Amanecer Campus</p>
+              <p class="schedule__host">
+                Noticias y música para empezar el día
+              </p>
+            </div>
+          </li>
+          <li class="schedule__item">
+            <span class="schedule__time">10:00</span>
+            <div class="schedule__info">
+              <p class="schedule__show">Frecuencia Estudiantil</p>
+              <p class="schedule__host">
+                Con la Facultad de Comunicación Social
+              </p>
+            </div>
+          </li>
+          <li class="schedule__item">
+            <span class="schedule__time">14:00</span>
+            <div class="schedule__info">
+              <p class="schedule__show">Laboratorio Sonoro</p>
+              <p class="schedule__host">Música independiente y entrevistas</p>
+            </div>
+          </li>
+          <li class="schedule__item">
+            <span class="schedule__time">19:00</span>
+            <div class="schedule__info">
+              <p class="schedule__show">Nocturno U</p>
+              <p class="schedule__host">
+                Cierre del día con la comunidad universitaria
+              </p>
+            </div>
+          </li>
+        </ol>
+      </section>
+
+      <!-- ============ SOBRE LA EMISORA ============ -->
+      <section class="about" aria-label="Sobre la emisora">
+        <h2>Hecha por y para la comunidad universitaria</h2>
+        <p>
+          Transmitimos en vivo las 24 horas desde el campus. Estudiantes,
+          docentes y egresados producen cada programa: noticias, música y
+          conversación pensadas para la universidad.
+        </p>
+      </section>
+    </main>
+
+    <!-- ============ FOOTER ============ -->
+    <footer class="site-footer">
+      <p>
+        © <span id="year"></span> Radio Universitaria. Transmisión en vivo vía
+        Icecast.
+      </p>
+      <div class="site-footer__social">
+        <a href="#" aria-label="Instagram">Instagram</a>
+        <a href="#" aria-label="X / Twitter">X</a>
+        <a href="#" aria-label="Correo">Contacto</a>
+      </div>
+    </footer>
+
+    <!-- ============ SCRIPTS ============ -->
+    <!-- Orden importa: config -> player -> metadata -> main -->
+    <script src="../js/config.js"></script>
+    <script src="../js/player.js"></script>
+    <script src="../js/metadata.js"></script>
+    <script src="../js/main.js"></script>
+  </body>
+</html>

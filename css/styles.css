@@ -1,0 +1,550 @@
+/* =========================================================
+   RADIO UNIVERSITARIA — estilos
+   Mobile-first. Tema oscuro fijo (una radio en línea vive
+   de noche tanto como de día, así que no alternamos tema).
+   ========================================================= */
+
+:root {
+  /* --- Color: paleta "cabina de radio" --- */
+  --bg: #12101b;
+  --bg-elevated: #1c1830;
+  --bg-elevated-2: #241f3d;
+  --border: rgba(245, 243, 250, 0.09);
+
+  --text-primary: #f5f3fa;
+  --text-muted: #9c97b8;
+
+  --accent-signal: #ff5a36;   /* rojo-naranja: "EN VIVO", luz de cabina */
+  --accent-signal-dim: #ff5a3633;
+  --accent-freq: #5eead4;     /* cian: número de frecuencia, ecualizador */
+
+  /* --- Tipografía --- */
+  --font-display: "Space Grotesk", "Segoe UI", sans-serif;
+  --font-body: "Inter", "Segoe UI", sans-serif;
+
+  /* --- Layout --- */
+  --content-width: 640px;
+  --radius-sm: 10px;
+  --radius-lg: 28px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3 {
+  font-family: var(--font-display);
+  margin: 0;
+}
+
+p {
+  margin: 0;
+}
+
+a {
+  color: inherit;
+}
+
+/* Respeta a quien prefiere menos movimiento */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+
+/* Foco visible para navegación por teclado */
+:focus-visible {
+  outline: 2px solid var(--accent-freq);
+  outline-offset: 3px;
+}
+
+/* =========================================================
+   HEADER
+   ========================================================= */
+
+.site-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 20px 0;
+  max-width: var(--content-width);
+  margin: 0 auto;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 1.05rem;
+  letter-spacing: 0.01em;
+}
+
+.brand__mark {
+  font-size: 1.3rem;
+}
+
+.live-badge {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 7px 12px;
+  border-radius: 999px;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--text-muted);
+}
+
+.live-badge__dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--text-muted);
+  transition: background 0.3s ease;
+}
+
+/* Estado: transmitiendo */
+.live-badge[data-state="live"] {
+  color: var(--accent-signal);
+}
+.live-badge[data-state="live"] .live-badge__dot {
+  background: var(--accent-signal);
+  box-shadow: 0 0 0 0 var(--accent-signal-dim);
+  animation: livePulse 2s infinite;
+}
+
+/* Estado: fuera de línea */
+.live-badge[data-state="offline"] {
+  color: var(--text-muted);
+}
+
+@keyframes livePulse {
+  0%   { box-shadow: 0 0 0 0 var(--accent-signal-dim); }
+  70%  { box-shadow: 0 0 0 8px transparent; }
+  100% { box-shadow: 0 0 0 0 transparent; }
+}
+
+/* =========================================================
+   TUNER — sección hero con el dial de Play/Pausa
+   ========================================================= */
+
+.tuner {
+  max-width: var(--content-width);
+  margin: 0 auto;
+  padding: 48px 24px 40px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.tuner__eyebrow {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
+
+.tuner__freq {
+  font-size: clamp(3rem, 16vw, 4.5rem);
+  font-weight: 700;
+  color: var(--accent-freq);
+  line-height: 1;
+  margin-top: 6px;
+  letter-spacing: -0.02em;
+}
+
+.tuner__freq-unit {
+  font-size: 0.35em;
+  font-weight: 600;
+  color: var(--text-muted);
+  margin-left: 6px;
+  vertical-align: middle;
+}
+
+/* --- El dial: botón circular grande, controla todo el audio --- */
+.dial {
+  position: relative;
+  width: clamp(160px, 45vw, 200px);
+  height: clamp(160px, 45vw, 200px);
+  margin: 40px 0 20px;
+  border-radius: 50%;
+  border: none;
+  cursor: pointer;
+  background: radial-gradient(circle at 32% 28%, var(--bg-elevated-2), var(--bg-elevated) 70%);
+  box-shadow:
+    0 0 0 1px var(--border),
+    0 20px 40px -18px rgba(0, 0, 0, 0.7),
+    inset 0 1px 0 rgba(255, 255, 255, 0.04);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.15s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.dial:hover {
+  transform: scale(1.02);
+}
+
+.dial:active {
+  transform: scale(0.97);
+}
+
+/* Anillo estático */
+.dial__ring {
+  position: absolute;
+  inset: -1px;
+  border-radius: 50%;
+  border: 1.5px solid var(--border);
+  pointer-events: none;
+}
+
+/* Anillo que pulsa cuando está EN VIVO reproduciendo */
+.dial__ring--pulse {
+  border-color: var(--accent-signal-dim);
+  opacity: 0;
+}
+
+.dial[data-playing="true"] .dial__ring--pulse {
+  opacity: 1;
+  animation: ringPulse 2.4s ease-out infinite;
+}
+
+@keyframes ringPulse {
+  0%   { transform: scale(1);    opacity: 0.55; }
+  100% { transform: scale(1.35); opacity: 0; }
+}
+
+/* Iconos dentro del dial: play / pause / loading, uno visible a la vez */
+.dial__icon {
+  position: absolute;
+  width: 34%;
+  height: 34%;
+  fill: var(--text-primary);
+  opacity: 0;
+  transform: scale(0.85);
+  transition: opacity 0.15s ease, transform 0.15s ease;
+}
+
+.dial__icon--play    { opacity: 1; transform: scale(1); margin-left: 4%; }
+.dial__icon--pause,
+.dial__icon--loading  { opacity: 0; }
+
+.dial[data-playing="true"] .dial__icon--play  { opacity: 0; transform: scale(0.85); }
+.dial[data-playing="true"] .dial__icon--pause { opacity: 1; transform: scale(1); }
+
+.dial[data-state="loading"] .dial__icon--play,
+.dial[data-state="loading"] .dial__icon--pause {
+  opacity: 0;
+}
+.dial[data-state="loading"] .dial__icon--loading {
+  opacity: 1;
+  fill: none;
+  stroke: var(--text-primary);
+  stroke-width: 2.4;
+  stroke-linecap: round;
+  stroke-dasharray: 42 100;
+  animation: spin 0.9s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.tuner__hint {
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  min-height: 1.2em;
+}
+
+/* =========================================================
+   NOW PLAYING
+   ========================================================= */
+
+.now-playing {
+  margin-top: 32px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 18px;
+  border-radius: var(--radius-sm);
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  text-align: left;
+}
+
+/* Mini ecualizador animado, solo "vivo" cuando suena */
+.now-playing__eq {
+  display: flex;
+  align-items: flex-end;
+  gap: 3px;
+  height: 18px;
+  flex-shrink: 0;
+}
+
+.now-playing__eq span {
+  width: 3px;
+  height: 30%;
+  background: var(--accent-freq);
+  border-radius: 2px;
+  opacity: 0.35;
+}
+
+.now-playing[data-playing="true"] .now-playing__eq span {
+  opacity: 1;
+  animation: eq 1s ease-in-out infinite;
+}
+.now-playing[data-playing="true"] .now-playing__eq span:nth-child(1) { animation-delay: 0s; }
+.now-playing[data-playing="true"] .now-playing__eq span:nth-child(2) { animation-delay: 0.15s; }
+.now-playing[data-playing="true"] .now-playing__eq span:nth-child(3) { animation-delay: 0.3s; }
+.now-playing[data-playing="true"] .now-playing__eq span:nth-child(4) { animation-delay: 0.45s; }
+
+@keyframes eq {
+  0%, 100% { height: 30%; }
+  50%      { height: 100%; }
+}
+
+.now-playing__text {
+  min-width: 0; /* permite truncar texto largo */
+}
+
+.now-playing__label {
+  font-size: 0.72rem;
+  text-transform: none;
+  color: var(--text-muted);
+  margin-bottom: 2px;
+}
+
+.now-playing__title {
+  font-weight: 600;
+  font-size: 0.95rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* =========================================================
+   COMUNIDAD EN DISCORD
+   ========================================================= */
+
+.community {
+  max-width: var(--content-width);
+  margin: 0 auto;
+  padding: 0 24px 40px;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: center;
+  gap: 14px;
+}
+
+.community__icon {
+  width: 44px;
+  height: 44px;
+  display: grid;
+  place-items: center;
+  border-radius: var(--radius-sm);
+  background: #5865f2;
+  color: #fff;
+}
+
+.community__icon svg {
+  width: 25px;
+  height: 25px;
+  fill: currentColor;
+}
+
+.community__copy {
+  min-width: 0;
+}
+
+.community__copy h2 {
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.community__copy p {
+  color: var(--text-muted);
+  font-size: 0.8rem;
+  line-height: 1.4;
+  margin-top: 2px;
+}
+
+.community__link {
+  grid-column: 1 / -1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 42px;
+  padding: 10px 16px;
+  border: 1px solid #5865f2;
+  border-radius: var(--radius-sm);
+  background: #5865f2;
+  color: #fff;
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+
+.community__link:hover {
+  background: #4752c4;
+  border-color: #4752c4;
+}
+
+.community__link[aria-disabled="true"] {
+  cursor: not-allowed;
+  opacity: 0.55;
+}
+
+/* =========================================================
+   PROGRAMACIÓN
+   ========================================================= */
+
+.schedule {
+  max-width: var(--content-width);
+  margin: 0 auto;
+  padding: 8px 24px 40px;
+}
+
+.section-head {
+  margin-bottom: 18px;
+}
+
+.section-head h2 {
+  font-size: 1.3rem;
+  font-weight: 600;
+}
+
+.section-head__sub {
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  margin-top: 4px;
+}
+
+.schedule__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  background: var(--border);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  border: 1px solid var(--border);
+}
+
+.schedule__item {
+  display: flex;
+  align-items: baseline;
+  gap: 16px;
+  padding: 16px;
+  background: var(--bg-elevated);
+}
+
+.schedule__time {
+  font-family: var(--font-display);
+  font-weight: 600;
+  color: var(--accent-freq);
+  font-size: 0.95rem;
+  flex-shrink: 0;
+  width: 3.2em;
+}
+
+.schedule__show {
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+.schedule__host {
+  color: var(--text-muted);
+  font-size: 0.82rem;
+  margin-top: 2px;
+}
+
+/* =========================================================
+   ABOUT
+   ========================================================= */
+
+.about {
+  max-width: var(--content-width);
+  margin: 0 auto;
+  padding: 8px 24px 56px;
+}
+
+.about h2 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+
+.about p {
+  color: var(--text-muted);
+  max-width: 56ch;
+}
+
+/* =========================================================
+   FOOTER
+   ========================================================= */
+
+.site-footer {
+  border-top: 1px solid var(--border);
+  padding: 24px;
+  max-width: var(--content-width);
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  color: var(--text-muted);
+  font-size: 0.8rem;
+}
+
+.site-footer__social {
+  display: flex;
+  gap: 16px;
+}
+
+.site-footer__social a {
+  text-decoration: none;
+  color: var(--text-muted);
+  transition: color 0.15s ease;
+}
+
+.site-footer__social a:hover {
+  color: var(--text-primary);
+}
+
+/* =========================================================
+   RESPONSIVE — a partir de tablet/desktop
+   ========================================================= */
+
+@media (min-width: 640px) {
+  .site-footer {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .schedule__item {
+    padding: 18px 22px;
+  }
+}
