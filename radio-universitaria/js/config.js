@@ -41,14 +41,14 @@ const RADIO_CONFIG = {
   // 1) URL del stream de audio (lo que consume el <audio>)
   //    Reemplaza por el mount point real de tu Icecast.
   // --------------------------------------------------------------
-  STREAM_URL_HTTPS: "https://tu-dominio-icecast.com/stream", // ← reemplaza esto
+  STREAM_URL_HTTPS: "https://shoutcast.caster.fm:12345/listen", // ← reemplaza esto
   STREAM_URL_HTTP: "http://tu-dominio-icecast.com:8000/stream", // solo referencia / desarrollo local
 
   // --------------------------------------------------------------
   // 2) URL del endpoint de metadatos de Icecast (status-json.xsl)
   //    Normalmente vive en la raíz del mismo servidor Icecast.
   // --------------------------------------------------------------
-  STATUS_URL_HTTPS: "https://tu-dominio-icecast.com/status-json.xsl", // ← reemplaza esto
+  STATUS_URL_HTTPS: "https://shoutcast.caster.fm:12345/listen", // ← reemplaza esto
   STATUS_URL_HTTP: "http://tu-dominio-icecast.com:8000/status-json.xsl",
 
   // --------------------------------------------------------------
@@ -57,7 +57,7 @@ const RADIO_CONFIG = {
   //    Se usa para identificar la fuente correcta si el servidor
   //    Icecast tiene varios mounts activos.
   // --------------------------------------------------------------
-  MOUNT_POINT: "/stream", // ← ajusta si tu mount se llama distinto
+  MOUNT_POINT: "/listen", // ← ajusta si tu mount se llama distinto
 
   // --------------------------------------------------------------
   // 4) Frecuencia de sondeo de metadatos (ms). 10000 = 10 segundos,
@@ -68,7 +68,7 @@ const RADIO_CONFIG = {
   // --------------------------------------------------------------
   // 5) Textos de respaldo cuando no hay datos todavía / hay error
   // --------------------------------------------------------------
-  FALLBACK_TITLE: "Radio Universitaria — Transmisión en vivo",
+  FALLBACK_TITLE: "Radio Colegial — Transmisión en vivo",
   OFFLINE_TITLE: "La transmisión no está disponible en este momento",
 };
 

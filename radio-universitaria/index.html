@@ -3,10 +3,10 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Radio Universitaria · 101.5 En Vivo</title>
+    <title>Radio Colegio · 101.5 En Vivo</title>
     <meta
       name="description"
-      content="La radio de la universidad, transmitiendo en vivo las 24 horas. Escucha en vivo desde tu navegador."
+      content="La radio del colegio, transmitiendo en vivo las 24 horas. Escucha en vivo desde tu navegador."
     />
     <meta name="theme-color" content="#12101B" />
 
@@ -18,7 +18,7 @@
       rel="stylesheet"
     />
 
-    <link rel="stylesheet" href="../css/styles.css" />
+    <link rel="stylesheet" href="css/styles.css" />
 
     <!-- Favicon simple (reemplaza por tu logo real en /assets) -->
     <link
@@ -31,7 +31,7 @@
     <header class="site-header">
       <div class="brand">
         <span class="brand__mark" aria-hidden="true">📻</span>
-        <span class="brand__name">Radio&nbsp;U</span>
+        <span class="brand__name">Radio&nbsp;Colegio</span>
       </div>
 
       <div class="live-badge" id="liveBadge" data-state="checking">
@@ -47,7 +47,9 @@
         <h1 class="tuner__freq">
           101.5<span class="tuner__freq-unit">FM</span>
         </h1>
-
+        <audio id="radio-stream" preload="none">
+            <source src="https://shoutcast.caster.fm:12345/listen" type="audio/mpeg">
+        </audio>
         <!-- Botón de sintonización / Play-Pause. Es un <button>, NO un <audio controls>. -->
         <button
           class="dial"
@@ -150,7 +152,7 @@
             <div class="schedule__info">
               <p class="schedule__show">Frecuencia Estudiantil</p>
               <p class="schedule__host">
-                Con la Facultad de Comunicación Social
+                Facultad de Comunicación Social
               </p>
             </div>
           </li>
@@ -166,7 +168,7 @@
             <div class="schedule__info">
               <p class="schedule__show">Nocturno U</p>
               <p class="schedule__host">
-                Cierre del día con la comunidad universitaria
+                Cierre del día con la comunidad colegial
               </p>
             </div>
           </li>
@@ -175,11 +177,11 @@
 
       <!-- ============ SOBRE LA EMISORA ============ -->
       <section class="about" aria-label="Sobre la emisora">
-        <h2>Hecha por y para la comunidad universitaria</h2>
+        <h2>Hecha por y para la comunidad colegial</h2>
         <p>
           Transmitimos en vivo las 24 horas desde el campus. Estudiantes,
           docentes y egresados producen cada programa: noticias, música y
-          conversación pensadas para la universidad.
+          conversación pensadas para el colegio.
         </p>
       </section>
     </main>
@@ -187,7 +189,7 @@
     <!-- ============ FOOTER ============ -->
     <footer class="site-footer">
       <p>
-        © <span id="year"></span> Radio Universitaria. Transmisión en vivo vía
+        © <span id="year"></span> Radio Colegio. Transmisión en vivo vía
         Icecast.
       </p>
       <div class="site-footer__social">
@@ -199,9 +201,9 @@
 
     <!-- ============ SCRIPTS ============ -->
     <!-- Orden importa: config -> player -> metadata -> main -->
-    <script src="../js/config.js"></script>
-    <script src="../js/player.js"></script>
-    <script src="../js/metadata.js"></script>
-    <script src="../js/main.js"></script>
+    <script src="js/config.js"></script>
+    <script src="js/player.js"></script>
+    <script src="js/metadata.js"></script>
+    <script src="js/main.js"></script>
   </body>
 </html>
