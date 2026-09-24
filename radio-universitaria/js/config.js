@@ -35,20 +35,20 @@ const RADIO_CONFIG = {
   //    Copia aquí el enlace que genera Discord, por ejemplo:
   //    https://discord.gg/tu-invitacion
   // --------------------------------------------------------------
-  DISCORD_INVITE_URL: "https://discord.gg/6jFUDMcCe",
+  DISCORD_INVITE_URL: "https://discord.gg/GXnSAec9H",
 
   // --------------------------------------------------------------
   // 1) URL del stream de audio (lo que consume el <audio>)
   //    Reemplaza por el mount point real de tu Icecast.
   // --------------------------------------------------------------
-  STREAM_URL_HTTPS: "https://shoutcast.caster.fm:12345/listen", // ← reemplaza esto
+  STREAM_URL_HTTPS: "https://shoutcast.caster.fm:12345/X9bwj", // ← reemplaza esto
   STREAM_URL_HTTP: "http://tu-dominio-icecast.com:8000/stream", // solo referencia / desarrollo local
 
   // --------------------------------------------------------------
   // 2) URL del endpoint de metadatos de Icecast (status-json.xsl)
   //    Normalmente vive en la raíz del mismo servidor Icecast.
   // --------------------------------------------------------------
-  STATUS_URL_HTTPS: "https://shoutcast.caster.fm:12345/listen", // ← reemplaza esto
+  STATUS_URL_HTTPS: "https://shoutcast.caster.fm:12345/X9bwj", // ← reemplaza esto
   STATUS_URL_HTTP: "http://tu-dominio-icecast.com:8000/status-json.xsl",
 
   // --------------------------------------------------------------
@@ -57,7 +57,7 @@ const RADIO_CONFIG = {
   //    Se usa para identificar la fuente correcta si el servidor
   //    Icecast tiene varios mounts activos.
   // --------------------------------------------------------------
-  MOUNT_POINT: "/listen", // ← ajusta si tu mount se llama distinto
+  MOUNT_POINT: "/X9bwj", // ← ajusta si tu mount se llama distinto
 
   // --------------------------------------------------------------
   // 4) Frecuencia de sondeo de metadatos (ms). 10000 = 10 segundos,
